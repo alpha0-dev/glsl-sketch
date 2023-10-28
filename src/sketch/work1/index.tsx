@@ -1,46 +1,38 @@
-import * as THREE from "three"
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls } from "@react-three/drei"
-import { useThree } from "@react-three/fiber"
-import { useControls } from "leva"
 import vert from "./vert.glsl"
 import frag from "./frag.glsl"
-import { useShadertoyUniforms } from "../common/useShadertoyUniforms"
-
-const material = new THREE.ShaderMaterial({
-	vertexShader: vert,
-	fragmentShader: frag,
-	side: THREE.DoubleSide,
-	uniforms: {
-		uDistort: { value: 0 },
-	},
-})
-
-function Experience() {
-	useShadertoyUniforms(material)
-	const { viewport } = useThree()
-	useControls({
-		uDistort: {
-			value: 1,
-			min: 0,
-			max: 2,
-			onChange: value => {
-				material.uniforms.uDistort.value = value
-			},
-		},
-	})
-	return (
-		<mesh material={material}>
-			<planeGeometry args={[viewport.width, viewport.height, 64, 64]} />
-		</mesh>
-	)
-}
 
 export function Work1() {
 	return (
 		<Canvas>
-			<OrbitControls />
-			<Experience />
+			<color attach="background" args={["#000"]} />
+			<points>
+				<bufferGeometry>
+					<bufferAttribute
+						attach="attributes-position"
+						count={5}
+						array={Float32Array.from([
+							0.0,
+							0.0,
+							0.0, // １つ目の頂点の XYZ
+							-0.5,
+							0.5,
+							0.0, // ２つ目の頂点の XYZ
+							0.5,
+							0.5,
+							0.0, // ３つ目の頂点の XYZ
+							-0.5,
+							-0.5,
+							0.0, // ４つ目の頂点の XYZ
+							0.5,
+							-0.5,
+							0.0, // ５つ目の頂点の XYZ
+						])}
+						itemSize={3}
+					/>
+				</bufferGeometry>
+				<shaderMaterial vertexShader={vert} fragmentShader={frag} />
+			</points>
 		</Canvas>
 	)
 }
