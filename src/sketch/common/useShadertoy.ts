@@ -37,7 +37,7 @@ const shadertoyUniforms: { [key: string]: THREE.IUniform } = {
 	},
 }
 
-export function useShadertoyUniforms(shaderMaterial: THREE.ShaderMaterial) {
+export function useShadertoy(shaderMaterial: THREE.ShaderMaterial) {
 	shaderMaterial.uniforms = {
 		...shaderMaterial.uniforms,
 		...shadertoyUniforms,
